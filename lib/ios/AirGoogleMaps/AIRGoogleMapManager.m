@@ -485,7 +485,7 @@ RCT_EXPORT_METHOD(setMapBoundaries:(nonnull NSNumber *)reactTag
 #pragma mark Gesture Recognizer Handlers
 
 - (void)handleMapDrag:(UIPanGestureRecognizer*)recognizer {
-    AIRGoogleMap *map = (AIRGoogleMap *)recognizer.view;
+   AIRGoogleMap *map = (AIRGoogleMap *)recognizer.view;
     if (!map.onPanDrag) return;
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         CGPoint touchPoint = [recognizer locationInView:map];
@@ -503,7 +503,6 @@ RCT_EXPORT_METHOD(setMapBoundaries:(nonnull NSNumber *)reactTag
     }else{
         return;
     }
-   
     
 }
 @end
