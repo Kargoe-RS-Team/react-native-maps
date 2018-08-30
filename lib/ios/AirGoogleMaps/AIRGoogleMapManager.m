@@ -485,21 +485,24 @@ RCT_EXPORT_METHOD(setMapBoundaries:(nonnull NSNumber *)reactTag
 #pragma mark Gesture Recognizer Handlers
 
 - (void)handleMapDrag:(UIPanGestureRecognizer*)recognizer {
-    AIRGoogleMap *map = (AIRGoogleMap *)recognizer.view;
+   AIRGoogleMap *map = (AIRGoogleMap *)recognizer.view;
     if (!map.onPanDrag) return;
-    
-    CGPoint touchPoint = [recognizer locationInView:map];
-    CLLocationCoordinate2D coord = [map.projection coordinateForPoint:touchPoint];
-    map.onPanDrag(@{
-                    @"coordinate": @{
-                            @"latitude": @(coord.latitude),
-                            @"longitude": @(coord.longitude),
-                            },
-                    @"position": @{
-                            @"x": @(touchPoint.x),
-                            @"y": @(touchPoint.y),
-                            },
-                    });
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        CGPoint touchPoint = [recognizer locationInView:map];
+        CLLocationCoordinate2D coord = [map.projection coordinateForPoint:touchPoint];
+        map.onPanDrag(@{
+                        @"coordinate": @{
+                                @"latitude": @(coord.latitude),
+                                @"longitude": @(coord.longitude),
+                                },
+                        @"position": @{
+                                @"x": @(touchPoint.x),
+                                @"y": @(touchPoint.y),
+                                },
+                        });
+    }else{
+        return;
+    }
     
 }
 @end
